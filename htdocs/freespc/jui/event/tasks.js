@@ -1,0 +1,1 @@
+var Dom=YAHOO.util.Dom;var Event=YAHOO.util.Event;var refreshCaller=function(){Dom.get('tasks').innerHTML="<img src='../img/loading_tiny.gif'/>";var a=function(o){Dom.get('tasks').innerHTML=o.responseText};var b={success:a};var c="";YAHOO.util.Connect.asyncRequest('POST','getTasks.php',b,c)};Event.onDOMReady(function(){refreshCaller()});

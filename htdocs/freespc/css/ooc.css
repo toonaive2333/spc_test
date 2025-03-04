@@ -1,0 +1,77 @@
+/* CSS Document */
+.ooc_table{
+	color:#333333;
+}
+.ooc_table a{
+	color:#333333;
+	text-decoration:none
+}
+.ooc_table a:hover{
+	text-decoration:underline
+}
+#charts_menu{
+	border:#7F9DB9 solid 1px;	
+	padding:5px 10px 15px 10px;
+	font-size:12px;
+	position:absolute;
+	background-color:#F9F9FF;
+	clear:left;
+	width:700px;	
+}
+#charts_menu .menu_title{
+	font-weight:bold;
+	cursor:pointer;
+}
+#charts_menu ul{
+	margin:0px;
+	margin-left:20px;
+	margin-bottom:5px;
+	padding:0px;
+	clear:left;
+	display:none;
+}
+#charts_menu li{
+	white-space: nowrap;
+	list-style-type:none;
+	margin:2px;
+}
+#charts_menu a{
+	color:#333333;
+	text-decoration:none;
+	padding:3px;
+}
+#charts_menu a:hover{
+	background-color:#B3D4FF
+}
+#current{
+	font-weight:bold;
+	float:left;
+}
+#selector{
+	margin-top:-10px;
+	cursor:pointer;
+	margin:0px auto;
+}
+#bar{
+	margin-left:0px;
+}
+#errorPan{
+	position:absolute;
+	top:-26px;
+	left:300px;
+	width:300px;
+}
+.bt{
+	width:150px;
+}
+#results{
+	margin-top:10px;
+}
+.tips{
+	font-family:Arial;
+	color:#3388DD;
+}
+#eventBt{
+	display:none;
+	margin-top:10;
+}

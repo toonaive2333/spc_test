@@ -1,0 +1,80 @@
+# 使用 Ubuntu 作为基础镜像
+FROM --platform=linux/amd64 ubuntu:18.04
+
+# 设置环境变量
+ENV DEBIAN_FRONTEND=noninteractive
+
+# 安装必要的软件包（移除 i386 相关包）
+RUN apt-get update && apt-get install -y \
+    wget \
+    curl \
+    ca-certificates \
+    unzip \
+    libfreetype6 \
+    libjpeg62 \
+    libpng16-16 \
+    libxpm4 \
+    libx11-6 \
+    libc6 \
+    zlib1g \
+    libexpat1 \
+    libfontconfig1 \
+    libaio1 \
+    libncurses5 \
+    libapr1 \
+    libxrender1 \
+    libxslt1.1 \
+    libldap-2.4-2 \
+    libxml2 \
+    msmtp \
+    msmtp-mta \
+    net-tools \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# 下载并安装 XAMPP 1.7.3 (包含 PHP 5.2.9)
+RUN cd /tmp && \
+    wget https://sourceforge.net/projects/xampp/files/XAMPP%20Linux/1.7.3/xampp-linux-1.7.3.tar.gz && \
+    tar -xzf xampp-linux-1.7.3.tar.gz -C /opt && \
+    rm xampp-linux-1.7.3.tar.gz
+
+# 配置 PHP 以关闭严格模式警告
+RUN echo "error_reporting = E_ALL & ~E_STRICT & ~E_DEPRECATED" >> /opt/lampp/etc/php.ini && \
+    echo "display_errors = On" >> /opt/lampp/etc/php.ini
+
+# 配置 PHP 使用 msmtp
+RUN echo "sendmail_path = /usr/bin/msmtp -t -i" >> /opt/lampp/etc/php.ini
+
+# 复制网站文件
+COPY ./htdocs/ /opt/lampp/htdocs/
+
+# 创建 sendmail 配置目录和文件
+RUN mkdir -p /opt/lampp/htdocs/freespc/includes/sendmail \
+    && echo -e "[sendmail]\nsmtp_server=localhost\nsmtp_port=25\ndefault_domain=localhost" > /opt/lampp/htdocs/freespc/includes/sendmail/sendmail_example.ini
+
+# 创建必要的目录和文件
+RUN mkdir -p /opt/lampp/htdocs/freespc/includes \
+    && touch /var/log/msmtp.log \
+    && chmod 666 /var/log/msmtp.log
+
+# 设置权限
+RUN chmod -R 755 /opt/lampp/htdocs \
+    && chown -R daemon:daemon /opt/lampp/htdocs
+
+# 暴露端口
+EXPOSE 80 443 3306
+
+# 创建启动脚本
+# 修改启动脚本，添加调试信息
+RUN echo '#!/bin/bash\n\
+echo "Starting XAMPP..."\n\
+mkdir -p /opt/lampp/logs\n\
+touch /opt/lampp/logs/error_log\n\
+chmod 777 /opt/lampp/logs/error_log\n\
+/opt/lampp/lampp start || { echo "XAMPP failed to start"; cat /opt/lampp/logs/error_log; exit 1; }\n\
+echo "XAMPP started successfully"\n\
+tail -f /opt/lampp/logs/error_log\n\
+' > /start.sh && chmod +x /start.sh
+
+# 启动 XAMPP
+CMD ["/start.sh"]
