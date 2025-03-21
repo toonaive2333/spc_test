@@ -61,7 +61,7 @@ class Chart{
 			$sql_create = $sql_create . "INDEX (data_time),";
 			$sql_create = $sql_create . "record_time datetime not null)"; //record time
 		}
-		// Ìí¼ÓÖÁ charts.xml
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ charts.xml
 		$this->configer->addChart($args);
 		//echo $sql_create;
 		$this->db->query($sql_create);
@@ -183,15 +183,15 @@ class Chart{
 		
 		$subject = "(Chart)";
 		$subject .= $this->parameters['name'];
-		$subject .= $this->encode("ÓĞOOC±¨¾¯£¬Çë¹Ø×¢¡£");
+		$subject .= $this->encode("ï¿½ï¿½OOCï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½");
 		
-		$body = $this->encode("Chart£º");
+		$body = $this->encode("Chartï¿½ï¿½");
 		$body .= $this->parameters['name']."\n";
-		$body .= $this->encode("Êı¾İÊ±¼ä£º".date('Y/m/d H:i:s')."\n");
+		$body .= $this->encode("ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£º".date('Y/m/d H:i:s')."\n");
 		$against = $data['against'];
 		if($against == 9) $against = 1;
-		$body .= $this->encode("Î¥·´¹æÔò£ºRule".$against."\n");
-		$body .= $this->encode("Ô­Ê¼Êı¾İ£º\n");		
+		$body .= $this->encode("Î¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Rule".$against."\n");
+		$body .= $this->encode("Ô­Ê¼ï¿½ï¿½ï¿½İ£ï¿½\n");		
 		
 		for($i=1;$i<=$this->parameters['sample_size'];){
 			$body .= "Data".$i.":".$data["x_$i"]."\n";
@@ -284,9 +284,9 @@ class Chart{
 		return $against;
 	}
 	
-	//rule1:1¸öµã¾àÀëÖĞĞÄÏß´óÓÚ3¸ö±ê×¼²î(¼´³¬³ö¿ØÖÆÏŞ) 
+	//rule1:1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß´ï¿½ï¿½ï¿½3ï¿½ï¿½ï¿½ï¿½×¼ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½) 
 	private function rule1($args){
-		if($this->parameters['type']<TYPE_P){//args°üº¬ÁËxbarºÍsub chartµÄÖµ
+		if($this->parameters['type']<TYPE_P){//argsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xbarï¿½ï¿½sub chartï¿½ï¿½Öµ
 			$ucl = $this->parameters['ucl_x'];
 			$lcl = $this->parameters['lcl_x'];
 			$ucl_2 = $this->parameters['ucl_2'];
@@ -303,12 +303,12 @@ class Chart{
 		}
 		return 0 ;
 	}
-	//rule 2:Á¬Ğø9µãÔÚÖĞĞÄÏßÍ¬Ò»²à
+	//rule 2:ï¿½ï¿½ï¿½ï¿½9ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬Ò»ï¿½ï¿½
 	private function rule2($args){
 		$cl = $this->parameters['cl'];
 		$v = $args['rate'];//point value
 		$fieldInDB = "";
-		if($this->parameters['type']<TYPE_P){//args°üº¬ÁËxbarºÍsub chartµÄÖµ
+		if($this->parameters['type']<TYPE_P){//argsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xbarï¿½ï¿½sub chartï¿½ï¿½Öµ
 			$ucl = $this->parameters['ucl_x'];
 			$lcl = $this->parameters['lcl_x'];
 			$cl = ($ucl+$lcl)/2;
@@ -324,12 +324,12 @@ class Chart{
 		//not against
 		if($v==$cl)
 			return 0;		
-		//Ç°8¸öµã
+		//Ç°8ï¿½ï¿½ï¿½ï¿½
 		$prev8 = $this->db->get_col("SELECT $fieldInDB FROM chart_".$this->CHART_ID." ORDER BY id DESC LIMIT 8");
 		//do not check
 		if(count($prev8)<8)
 			return 0;
-		//Á¬Ğø9µã< CL
+		//ï¿½ï¿½ï¿½ï¿½9ï¿½ï¿½< CL
 				
 		if($v<$cl){
 			foreach($prev8 as $value){
@@ -337,7 +337,7 @@ class Chart{
 					return 0;
 			}
 		}		
-		//Á¬Ğø9µã> CL	
+		//ï¿½ï¿½ï¿½ï¿½9ï¿½ï¿½> CL	
 		if($v>$cl){
 			foreach($prev8 as $value){
 				if($value<=$cl)
@@ -347,10 +347,10 @@ class Chart{
 				
 		return 2;
 	}
-	//rule 3:Á¬Ğø6¸öµã£¬È«²¿µİÔö»òÈ«²¿µİ¼õ
+	//rule 3:ï¿½ï¿½ï¿½ï¿½6ï¿½ï¿½ï¿½ã£¬È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½İ¼ï¿½
 	private function rule3($args){
 		$v = $args['rate'];//point value
-		if($this->parameters['type']<TYPE_P){//args°üº¬ÁËxbarºÍsub chartµÄÖµ
+		if($this->parameters['type']<TYPE_P){//argsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xbarï¿½ï¿½sub chartï¿½ï¿½Öµ
 			$v = $args['xbar'];
 			$fieldInDB = 'xbar';
 			if($this->parameters['type']==TYPE_IMR)
@@ -369,14 +369,14 @@ class Chart{
 			return 0;
 		
 			
-		//Á¬ĞøÏÂ½µ	
+		//ï¿½ï¿½ï¿½ï¿½ï¿½Â½ï¿½	
 		if($v<$prev5[0]){
 			for($i=0;$i<4;$i++){
 				if($prev5[$i]>=$prev5[$i+1])
 					return 0;
 			}
 		}		
-		//Á¬ĞøÉÏÉı
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if($v>$prev5[0]){
 			for($i=0;$i<4;$i++){
 				if($prev5[$i]<=$prev5[$i+1]){					
@@ -387,10 +387,10 @@ class Chart{
 		
 		return 3;
 	}
-	//rule 4:Á¬Ğø 14¸öµã£¬ÉÏÏÂ½»´í
+	//rule 4:ï¿½ï¿½ï¿½ï¿½ 14ï¿½ï¿½ï¿½ã£¬ï¿½ï¿½ï¿½Â½ï¿½ï¿½ï¿½
 	private function rule4($args){
 		$v = $args['rate'];//point value
-		if($this->parameters['type']<TYPE_P){//args°üº¬ÁËxbarºÍsub chartµÄÖµ
+		if($this->parameters['type']<TYPE_P){//argsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xbarï¿½ï¿½sub chartï¿½ï¿½Öµ
 			$v = $args['xbar'];
 			$fieldInDB = 'xbar';
 			if($this->parameters['type']==TYPE_IMR)
@@ -423,14 +423,14 @@ class Chart{
 				
 		return 4;
 	}
-	//rule 5:3¸öµãÖĞÓĞ2¸öµã£¬¾àÀëÖĞĞÄÏß£¨Í¬²à£©´óÓÚ2¸ö±ê×¼²î
+	//rule 5:3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2ï¿½ï¿½ï¿½ã£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½Í¬ï¿½à£©ï¿½ï¿½ï¿½ï¿½2ï¿½ï¿½ï¿½ï¿½×¼ï¿½ï¿½
 	private function rule5($args){		
 		$v = $args['xbar'];	
 		$ucl = $this->parameters['ucl_x'];
 		$lcl = $this->parameters['lcl_x'];
 		$cl = ($ucl+$lcl)/2;	
-		$sigma2Up = ($cl+$ucl*2)/3;//+2¸ö±ê×¼²î
-		$sigma2Low = ($cl+$lcl*2)/3;//-2¸ö±ê×¼²î
+		$sigma2Up = ($cl+$ucl*2)/3;//+2ï¿½ï¿½ï¿½ï¿½×¼ï¿½ï¿½
+		$sigma2Low = ($cl+$lcl*2)/3;//-2ï¿½ï¿½ï¿½ï¿½×¼ï¿½ï¿½
 		$fieldInDB = 'xbar';
 		if($this->parameters['type']==TYPE_IMR)
 				$fieldInDB = 'x_1';
@@ -452,14 +452,14 @@ class Chart{
 				
 		return 0;
 	}
-	//rule 6:5¸öµãÖĞÓĞ4¸öµã£¬¾àÀëÖĞĞÄÏß£¨Í¬²à£©´óÓÚ1¸ö±ê×¼²î
+	//rule 6:5ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½4ï¿½ï¿½ï¿½ã£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½Í¬ï¿½à£©ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½×¼ï¿½ï¿½
 	private function rule6($args){		
 		$v = $args['xbar'];	
 		$ucl = $this->parameters['ucl_x'];
 		$lcl = $this->parameters['lcl_x'];
 		$cl = ($ucl+$lcl)/2;	
-		$sigma1Up = ($cl*2+$ucl)/3;//+1¸ö±ê×¼²î
-		$sigma1Low = ($cl*2+$lcl)/3;//-1¸ö±ê×¼²î
+		$sigma1Up = ($cl*2+$ucl)/3;//+1ï¿½ï¿½ï¿½ï¿½×¼ï¿½ï¿½
+		$sigma1Low = ($cl*2+$lcl)/3;//-1ï¿½ï¿½ï¿½ï¿½×¼ï¿½ï¿½
 		$fieldInDB = 'xbar';
 		if($this->parameters['type']==TYPE_IMR)
 				$fieldInDB = 'x_1';
@@ -488,14 +488,14 @@ class Chart{
 		}			
 		return 6;
 	}
-	//rule 7:Á¬Ğø15¸öµã£¬¾àÀëÖĞĞÄÏß£¨ÈÎÒ»²à£©1¸ö±ê×¼²îÒÔÄÚ
+	//rule 7:ï¿½ï¿½ï¿½ï¿½15ï¿½ï¿½ï¿½ã£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½ï¿½ï¿½Ò»ï¿½à£©1ï¿½ï¿½ï¿½ï¿½×¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	private function rule7($args){		
 		$v = $args['xbar'];	
 		$ucl = $this->parameters['ucl_x'];
 		$lcl = $this->parameters['lcl_x'];
 		$cl = ($ucl+$lcl)/2;	
-		$sigma1 = ($cl*2+$ucl)/3;//+1¸ö±ê×¼²î
-		$sigma2 = ($cl*2+$lcl)/3;//-1¸ö±ê×¼²î
+		$sigma1 = ($cl*2+$ucl)/3;//+1ï¿½ï¿½ï¿½ï¿½×¼ï¿½ï¿½
+		$sigma2 = ($cl*2+$lcl)/3;//-1ï¿½ï¿½ï¿½ï¿½×¼ï¿½ï¿½
 		
 		$fieldInDB = 'xbar';
 		if($this->parameters['type']==TYPE_IMR)
@@ -514,14 +514,14 @@ class Chart{
 					
 		return 7;
 	}
-	//rule 8:8Á¬Ğø8¸öµã£¬¾àÀëÖĞĞÄÏß£¨ÈÎÒ»²à£©´óÓÚ1¸ö±ê×¼²î
+	//rule 8:8ï¿½ï¿½ï¿½ï¿½8ï¿½ï¿½ï¿½ã£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½ï¿½ï¿½Ò»ï¿½à£©ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½×¼ï¿½ï¿½
 	private function rule8($args){		
 		$v = $args['xbar'];	
 		$ucl = $this->parameters['ucl_x'];
 		$lcl = $this->parameters['lcl_x'];
 		$cl = ($ucl+$lcl)/2;	
-		$sigma1 = ($cl*2+$ucl)/3;//1¸ö±ê×¼²î
-		$sigma2 = ($cl*2+$lcl)/3;//-1¸ö±ê×¼²î
+		$sigma1 = ($cl*2+$ucl)/3;//1ï¿½ï¿½ï¿½ï¿½×¼ï¿½ï¿½
+		$sigma2 = ($cl*2+$lcl)/3;//-1ï¿½ï¿½ï¿½ï¿½×¼ï¿½ï¿½
 		
 		$fieldInDB = 'xbar';
 		if($this->parameters['type']==TYPE_IMR)
@@ -597,7 +597,7 @@ class Config_xml{
 	elseif ( file_exists(dirname(ABSPATH) . '/charts.xml') )
 		$this->fileName = dirname(ABSPATH) . '/charts.xml';
 	else
-		tx_die($this->encode("ÕÒ²»µ½<code>charts.xml</code>ÎÄ¼ş£¬ÈôÄúÎóÉ¾³ı¸ÃÎÄ¼ş£¬Äú¿ÉÒÔ´Ó<code>charts-sample.xml</code>¸´ÖÆ¡£"));
+		tx_die($this->encode("ï¿½Ò²ï¿½ï¿½ï¿½<code>charts.xml</code>ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½<code>charts-sample.xml</code>ï¿½ï¿½ï¿½Æ¡ï¿½"));
 		
  	$this->chartId = $id;
     $this->dom = new DOMDocument();
@@ -672,7 +672,7 @@ class Config_xml{
 	$log = $this->dom->createElement('log');
 	$log->setAttribute('time',date('y-m-d H:i:s'));
 	$log->setAttribute('operator',$_COOKIE['login_name']);
-	$log->setAttribute('operation',$this->encode("´´½¨Chart"));
+	$log->setAttribute('operation',$this->encode("ï¿½ï¿½ï¿½ï¿½Chart"));
     //add a create log when creating
     $logs->appendChild($log);
     $chart->appendChild($logs);
@@ -684,15 +684,15 @@ class Config_xml{
   
   public function updateChart($args){
   	global $wpdb;
-	$operation = "¸üĞÂChart";
+	$operation = "ï¿½ï¿½ï¿½ï¿½Chart";
   	$log = "";	
     $root = $this->parameters;
 	if($root->getAttribute('name') != $args['name']){
-		$log .= "ChartÃû³ÆÓÉ[".$this->decode($root->getAttribute('name'))."]¸ÄÎª[".$this->decode($args['name'])."];<br>";
+		$log .= "Chartï¿½ï¿½ï¿½ï¿½ï¿½ï¿½[".$this->decode($root->getAttribute('name'))."]ï¿½ï¿½Îª[".$this->decode($args['name'])."];<br>";
 		$root->setAttribute('name',$args['name']);		
 	}
 	if($root->getAttribute('team') != $args['team']){
-		$log .= "ÔğÈÎTeamÓÉ[".$this->decode($root->getAttribute('team_name'))."]¸ÄÎª[".$this->decode($args['team_name'])."];<br>";
+		$log .= "ï¿½ï¿½ï¿½ï¿½Teamï¿½ï¿½[".$this->decode($root->getAttribute('team_name'))."]ï¿½ï¿½Îª[".$this->decode($args['team_name'])."];<br>";
 		$root->setAttribute('team',$args['team']);
 		$root->setAttribute('team_name',$args['team_name']);
 	}
@@ -708,9 +708,9 @@ class Config_xml{
 					$temp = $childNode->nodeValue;
 					$childNode->nodeValue = $args[$nodeName];
 					if($nodeName == 'rules')
-						$log .= $nodeName."ÓÉ[".substr($temp,2)."]¸ÄÎª[".substr($args[$nodeName],2)."];<br>";
+						$log .= $nodeName."ï¿½ï¿½[".substr($temp,2)."]ï¿½ï¿½Îª[".substr($args[$nodeName],2)."];<br>";
 					else
-						$log .= $nodeName."ÓÉ[$temp]¸ÄÎª[".$args[$nodeName]."];<br>";
+						$log .= $nodeName."ï¿½ï¿½[$temp]ï¿½ï¿½Îª[".$args[$nodeName]."];<br>";
 				}
 			}
 		}
@@ -769,7 +769,13 @@ class Config_xml{
   }
 
   private function encode($source){
-    return mb_convert_encoding($source, 'utf-8', 'gb2312');
+    // return mb_convert_encoding($source, 'utf-8', 'gb2312');
+	    // æ£€æŸ¥å­—ç¬¦ä¸²ç¼–ç 
+	$encoding = mb_detect_encoding($source, array('UTF-8', 'GB2312', 'GBK'), true);
+	if ($encoding != 'UTF-8') {
+		return mb_convert_encoding($source, 'UTF-8', $encoding);
+	}
+	return $source;
   }
   
   private function decode($source){
